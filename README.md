@@ -3,6 +3,10 @@ Console application for:
 - calculating the distance traveled by a material point thrown at an angle to the horizon (with and without air resistance)
 - determining the area of intersection of a circle centered at the origin and a rectangle centered at the origin
 ## Distance traveled by a material point
+Model of motion of a material point thrown at an angle to the horizon:
+
+![Model](https://user-images.githubusercontent.com/75331348/153642082-c8282041-9aad-4d72-b526-a827af98f7c1.png)
+
 ### Analytic model
 Formula for distance traveled by a material point thrown at an angle to the horizon: 
 
