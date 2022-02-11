@@ -1,6 +1,6 @@
 # supreme-couscous
 Console application for:
-- calculating the distance traveled by a material point thrown at an angle to the horizon
+- calculating the distance traveled by a material point thrown at an angle to the horizon (with and without air resistance)
 - determining the area of intersection of a circle centered at the origin and a rectangle centered at the origin
 ## Distance traveled by a material point
 ### Analytic model
