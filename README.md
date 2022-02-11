@@ -6,7 +6,7 @@ Console application for:
 ### Analytic model
 Formula for distance traveled by a material point thrown at an angle to the horizon: 
 
-![Formula1](http://www.sciweavers.org/tex2img.php?eq=L%20%3D%20%20%5Cfrac%7B%5Cupsilon_0%5E2%20sin%202%20%20%5Ctheta%7D%7Bg%7D%20&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0 "Analytic model formula")
+![Formula1](https://sun9-15.userapi.com/impg/p6ZEYz0uNbNbRB06P6mgexWdjSqB7JPQDK2Caw/YqkPXep6pDM.jpg?size=135x53&quality=96&sign=a39ad5c2e861437fd8630cf65456d1c2&type=album "Analytic model formula")
 ### Imitation model
 Formulas with air resistance
 
