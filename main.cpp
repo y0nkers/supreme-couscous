@@ -5,7 +5,7 @@
 #include <random>
 #include <windows.h>
 
-#define PLOT 0 // 1 if you want to plot
+#define PLOT 1 // 1 if you want to plot
 
 using std::cout;
 using std::cin;
@@ -89,7 +89,7 @@ void material_point() {
 
 #if PLOT == 1
     data.close();
-    ShellExecuteA(NULL, NULL, "plot.exe", NULL, NULL, SW_SHOWDEFAULT); // execute exe for imitation model plot
+    ShellExecuteA(NULL, NULL, "plot.exe", NULL, NULL, SW_SHOWDEFAULT); // execute visualization for imitation model plot
 #endif // PLOT == 1
 
     auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(imitation_end - imitation_begin);
@@ -132,9 +132,10 @@ void getFigureCoords(long double figure_coords[2][2], long double circle_radius,
 }
 
 bool isInFigure(long double point_x, long double point_y, long double circle_radius, long double half_width, long double half_height) {
-    bool x = ((point_x >= -circle_radius && point_x <= circle_radius) && (point_x >= -half_width && point_x <= half_width));
-    bool y = ((point_y >= -circle_radius && point_y <= circle_radius) && (point_y >= -half_height && point_y <= half_height));
-    return x && y;
+    bool xInRect = point_x >= -half_width && point_x <= half_width;
+    bool yInRect = point_y >= -half_height && point_y <= half_height;
+    bool inCircle = sqrt(point_x * point_x + point_y * point_y) < circle_radius;
+    return xInRect && yInRect && inCircle;
 }
 
 void area_figure() {
@@ -194,6 +195,16 @@ void area_figure() {
 
     // Imitation model
     long double figure_coords[2][2]{ {0, 0}, {0, 0} }; // left up, right down (X,Y)
+    
+#if PLOT == 1
+    std::ofstream data; // stream from points in file
+    data.open("C:/montecarlo.txt");
+    if (!data) {
+        std::cerr << "Error: file could not be opened" << endl;
+        exit(1);
+    }
+    data << rectangle_width << " " << rectangle_height << " " << circle_radius << endl;
+#endif // PLOT == 1
 
     auto imitation_begin = std::chrono::steady_clock::now();
     getFigureCoords(figure_coords, circle_radius, half_width, half_height); // getting coords for created figure
@@ -210,13 +221,20 @@ void area_figure() {
         // Creating pseudo random numbers from figure_coords range: 
         point_x = x(gen);
         point_y = y(gen);
-        //cout << "Point: " << point_x << " " << point_y << endl;
+#if PLOT == 1
+        data << point_x << " " << point_y << endl; // write point (x, y) in file
+#endif // PLOT == 1
         if (isInFigure(point_x, point_y, circle_radius, half_width, half_height)) k++;
     }
 
     long double imitation_area = created_figure_area * k / imitation_model_points;
     auto imitation_end = std::chrono::steady_clock::now();
     auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(imitation_end - imitation_begin);
+
+#if PLOT == 1
+    data.close();
+    ShellExecuteA(NULL, NULL, "montecarlo2.exe", NULL, NULL, SW_SHOWDEFAULT); // execute visualization for monte-carlo
+#endif // PLOT == 1
 
     cout.precision(10);
     cout << std::fixed;
